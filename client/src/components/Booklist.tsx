@@ -1,45 +1,44 @@
-import React from "react";
-import {gql} from '@apollo/client';
-import {graphql} from 'react-apollo';
+import React, {useState} from "react";
 import LoadingDots from "./LoadingDots";
+import {getBooksQuery} from "../queries/queries";
 
-const getBooksQuery = gql`
-    {
-        books {
-            name
-            id
-        }
-    }
-`;
+import BookDetails from "./BookDetails";
+import {useQuery} from "@apollo/client";
 
-class Booklist extends React.Component<any, any> {
+type Props = {}
 
-    displayBooks() {
-        const data = this.props.data;
-        if (data.loading) {
+type State = {
+    selected: String
+}
+
+const Booklist = (props: Props) => {
+
+    const [selected, setSelected] = useState("");
+    const {loading, error, data} = useQuery(getBooksQuery);
+
+    const displayBooks = () => {
+        if (loading) {
             return (<div>
                 <h1 className="text-2xl pb-10">Loading books</h1>
                 <LoadingDots/>
             </div>)
         } else {
-            return data.books.map((book: { name: string }) => {
+            return data.books.map((book: { id: any, name: string }) => {
                 return (
-                    <li>{book.name}</li>
+                    <li key={book.id} onClick={(e) => setSelected(book.id)}>{book.name}</li>
                 )
             })
         }
     }
 
-    render() {
-        console.log(this.props);
-        return (
-            <div>
-                <ul id={"book-list"} className="list-disc list-inside text-2xl">
-                    {this.displayBooks()}
-                </ul>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <ul id={"book-list"} className="list-disc list-inside text-2xl">
+                {displayBooks()}
+            </ul>
+            <BookDetails bookId={selected}/>
+        </div>
+    )
 }
 
-export default graphql(getBooksQuery)(Booklist);
+export default Booklist;
