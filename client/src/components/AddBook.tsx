@@ -19,7 +19,7 @@ const AddBook = () => {
         } else {
             return data.authors.map((author: { id: any, name: string; }) => {
                 return (
-                    <option key={author.id} value={author.id}>{author.name}</option>
+                    <option className="select-author" key={author.id} value={author.id}>{author.name}</option>
                 );
             })
         }
@@ -28,14 +28,18 @@ const AddBook = () => {
     const [addBookMutation] = useMutation(ADD_BOOK_MUTATION);
     const submitForm = (e: any) => {
         e.preventDefault();
-        addBookMutation({
-            variables: {
-                name: name,
-                genre: genre,
-                authorId: authorId
-            },
-            refetchQueries: [{query: getBooksQuery}]
-        });
+        if (name == "" || genre == "" || authorId == "") {
+            alert("The form hasn't been filled correctly")
+        } else {
+            addBookMutation({
+                variables: {
+                    name: name,
+                    genre: genre,
+                    authorId: authorId
+                },
+                refetchQueries: [{query: getBooksQuery}]
+            });
+        }
     }
 
     return (
@@ -54,11 +58,11 @@ const AddBook = () => {
                 <label>Author:</label>
                 <select className="ml-3 focus:outline-none bg-gray-400 p-1 cursor-pointer border-none"
                         onChange={e => setAuthorId(e.target.value)}>
-                    <option className="border-none">Select author</option>
+                    <option className="border-none select-author">Select author</option>
                     {displayAuthors()}
                 </select>
             </div>
-            <button className="bg-gray-400 hover:bg-gray-500 px-3 ml-1">+</button>
+            <button className="focus:outline-none">+</button>
         </form>
     );
 }

@@ -25,7 +25,7 @@ const Booklist = (props: Props) => {
         } else {
             return data.books.map((book: { id: any, name: string }) => {
                 return (
-                    <li key={book.id} onClick={(e) => setSelected(book.id)}>{book.name}</li>
+                    <li key={book.id} className="inline-block m-3 p-2 list-item text-white" onClick={(e) => setSelected(book.id)}><p className="z-50">{book.name}</p></li>
                 )
             })
         }
@@ -33,7 +33,7 @@ const Booklist = (props: Props) => {
 
     return (
         <div>
-            <ul id={"book-list"} className="list-disc list-inside text-2xl">
+            <ul id={"book-list"} className="list-disc p-0 text-2xl">
                 {displayBooks()}
             </ul>
             <BookDetails bookId={selected}/>

@@ -12,7 +12,7 @@ const client = new ApolloClient({
 
 function App() {
     return <ApolloProvider client={client}>
-        <div id="main" className="p-10 bg-gray-200 h-screen">
+        <div id="main" className="p-0 box-border bg-gray-200 h-screen text-center w-8/12 h-screen">
             <h1 className={"text-4xl font-bold"}>Dominik's Reading List</h1>
             <Booklist/>
             <AddBook/>
