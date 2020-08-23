@@ -19,7 +19,7 @@ const AddBook = () => {
         } else {
             return data.authors.map((author: { id: any, name: string; }) => {
                 return (
-                    <option className="select-author" key={author.id} value={author.id}>{author.name}</option>
+                    <option className="select-author hover:text-purple-500" key={author.id} value={author.id}>{author.name}</option>
                 );
             })
         }
@@ -56,9 +56,9 @@ const AddBook = () => {
             </div>
             <div className="field mb-3">
                 <label>Author:</label>
-                <select className="ml-3 focus:outline-none bg-gray-400 p-1 cursor-pointer border-none"
+                <select className="ml-3 focus:outline-none p-1 cursor-pointer border-gray-500 border-2"
                         onChange={e => setAuthorId(e.target.value)}>
-                    <option className="border-none select-author">Select author</option>
+                    <option className="border-none bg-white">Select author</option>
                     {displayAuthors()}
                 </select>
             </div>
